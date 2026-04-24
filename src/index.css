@@ -1,0 +1,25 @@
+﻿@import "tailwindcss";
+
+@theme {
+  --color-neonBlue: #00f0ff;
+  --color-neonPurple: #9d00ff;
+  --color-darkBg: #0a0a0f;
+  --color-glass: rgba(255,255,255,0.05);
+}
+
+body {
+  background-color: #0a0a0f;
+  color: white;
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+/* Slick Carousel Overrides for Dark Theme */
+.slick-prev:before, .slick-next:before {
+  color: #9d00ff !important;
+  font-size: 30px !important;
+}
+.slick-prev { left: -40px !important; z-index: 50; }
+.slick-next { right: -30px !important; z-index: 50; }
+.slick-dots li button:before { color: white !important; }
+.slick-dots li.slick-active button:before { color: #9d00ff !important; }
