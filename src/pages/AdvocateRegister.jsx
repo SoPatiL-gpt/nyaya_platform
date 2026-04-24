@@ -15,6 +15,12 @@ const INDIAN_STATES = [
   "Lakshadweep","Puducherry"
 ];
 
+function calculateAge(dob) {
+  if (!dob) return "";
+  const diff = Date.now() - new Date(dob).getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+}
+
 function Field({ label, type = "text", placeholder, value, onChange, children, id, name, autoComplete }) {
   return (
     <div>
@@ -58,12 +64,6 @@ function AdvocateRegister() {
 
   const set = (key, val) => setForm((f) => ({ ...f, [key]: val }));
 
-  const calcAge = (dob) => {
-    if (!dob) return "";
-    const diff = Date.now() - new Date(dob).getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-  };
-
   const handleRegister = async () => {
     const required = ["barId","state","name","dob","education","mobile","govtId","address","email","password"];
     for (const k of required) {
@@ -82,7 +82,7 @@ function AdvocateRegister() {
         state: form.state,
         name: form.name,
         dob: form.dob,
-        age: calcAge(form.dob),
+        age: calculateAge(form.dob),
         education: form.education,
         practiceCourtType: form.practiceCourtType,
         yearsActive: form.yearsActive,
@@ -151,7 +151,7 @@ function AdvocateRegister() {
                   className="w-full p-3 bg-black border border-gray-700 focus:border-neonPurple rounded-lg text-white outline-none transition text-sm [color-scheme:dark]"
                 />
                 {form.dob && (
-                  <p className="text-xs text-neonPurple mt-1">Age: {calcAge(form.dob)} years</p>
+                  <p className="text-xs text-neonPurple mt-1">Age: {calculateAge(form.dob)} years</p>
                 )}
               </div>
               <div className="md:col-span-2">

@@ -15,6 +15,11 @@ const INDIAN_STATES = [
   "Lakshadweep","Puducherry",
 ];
 
+function calculateAge(dob) {
+  if (!dob) return "";
+  return Math.floor((Date.now() - new Date(dob).getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+}
+
 // Reusable field — defined outside to avoid remount bug
 function Field({ label, type = "text", placeholder, value, onChange, children }) {
   return (
@@ -51,11 +56,6 @@ function AdvocateLogin() {
   const [regLoading, setRegLoading] = useState(false);
 
   const setReg = (k, v) => setRegForm((f) => ({ ...f, [k]: v }));
-
-  const calcAge = (dob) => {
-    if (!dob) return "";
-    return Math.floor((Date.now() - new Date(dob).getTime()) / (1000 * 60 * 60 * 24 * 365.25));
-  };
 
   const saveSession = (uid, name, email, barId) => {
     localStorage.setItem("mock_uid", uid);
@@ -134,7 +134,7 @@ function AdvocateLogin() {
         barId,
         state,
         dob,
-        age: calcAge(dob),
+        age: calculateAge(dob),
         education,
         practiceCourtType: regForm.practiceCourtType,
         yearsActive: regForm.yearsActive,
@@ -199,7 +199,7 @@ function AdvocateLogin() {
                   </label>
                   <input type="date" value={regForm.dob} onChange={(e) => setReg("dob", e.target.value)}
                     className="w-full p-3 bg-black border border-gray-700 focus:border-neonPurple rounded-lg text-white outline-none text-sm [color-scheme:dark]" />
-                  {regForm.dob && <p className="text-xs text-neonPurple mt-1">Age: {calcAge(regForm.dob)} years</p>}
+                  {regForm.dob && <p className="text-xs text-neonPurple mt-1">Age: {calculateAge(regForm.dob)} years</p>}
                 </div>
                 <div className="md:col-span-2">
                   <Field label="Education Qualifications" placeholder="e.g. LLB, LLM from XYZ University" value={regForm.education} onChange={(v) => setReg("education", v)} />

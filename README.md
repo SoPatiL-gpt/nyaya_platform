@@ -1,16 +1,70 @@
-# React + Vite
+# Nyayadheesh Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite web app for client and advocate case workflows, including registration, dashboards, case creation, hearings, document uploads, chat, scheduling, and profile management.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- Vite
+- Firebase Auth
+- Cloud Firestore
+- Firebase Storage
+- React Router
+- ESLint
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Install dependencies:
 
-## Expanding the ESLint configuration
+   ```bash
+   npm ci
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Copy the environment template:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Fill `.env` with your Firebase web app configuration.
+
+4. Start development:
+
+   ```bash
+   npm run dev
+   ```
+
+## Scripts
+
+- `npm run dev` starts the local Vite server.
+- `npm run build` creates a production build in `dist`.
+- `npm run lint` runs ESLint.
+- `npm run preview` previews the production build locally.
+
+## Security Notes
+
+- `.env` and `.env.*` are ignored by git. Do not commit Firebase values, service-account files, private keys, tokens, or production credentials.
+- Firebase web config values are read from `VITE_FIREBASE_*` environment variables.
+- Database seed and migration pages are disabled in production by default.
+- Only enable `VITE_ENABLE_MAINTENANCE_ROUTES=true` or `VITE_RUN_STARTUP_MIGRATION=true` for controlled maintenance work.
+- Set `VITE_DEMO_SEED_PASSWORD` locally only when you intentionally seed demo users.
+- Protect Firestore and Storage with Firebase security rules before deploying publicly.
+
+## Project Structure
+
+```text
+src/
+  components/        Shared route and UI components
+  lib/               Firebase collection helpers
+  pages/             Application screens
+  firebase.js        Firebase client initialization
+  main.jsx           App bootstrap
+public/              Static assets
+```
+
+## Deployment Checklist
+
+- Run `npm run lint`.
+- Run `npm run build`.
+- Confirm `.env` is not staged with `git status --ignored --short`.
+- Confirm Firebase security rules are configured for real user access.

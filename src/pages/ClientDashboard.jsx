@@ -165,26 +165,8 @@ function ClientDashboard() {
     .filter((h) => !CONCLUDED.includes(h.timelineStatus))
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  const nextHearing = upcomingHearings.find(
-    (h) => new Date(h.date) >= new Date(new Date().toDateString()) && (!h.timelineStatus || h.timelineStatus === "scheduled")
-  );
-
   const getCaseHearings = (caseId) => myHearings.filter((h) => h.caseId === caseId);
 
-  // Calendar: only highlight upcoming hearing dates
-  const tileClassName = ({ date, view }) => {
-    if (view === "month") {
-      const ds = date.toDateString();
-      if (upcomingHearings.find((h) => new Date(h.date).toDateString() === ds))
-        return "bg-neonBlue/50 text-black font-bold rounded-full";
-    }
-    return null;
-  };
-
-  // Hearings on selected date — only upcoming
-  const hearingsOnDate = upcomingHearings.filter(
-    (h) => new Date(h.date).toDateString() === selectedDate.toDateString()
-  );
   const getCaseTab = (id) => activeCaseTab[id] || "details";
   const setCaseTab = (id, tab) => setActiveCaseTab((p) => ({ ...p, [id]: tab }));
 

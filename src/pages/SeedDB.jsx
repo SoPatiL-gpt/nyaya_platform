@@ -4,9 +4,11 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { setDoc, addDoc, collection, getDoc } from "firebase/firestore";
 import { userDocRef } from "../lib/userStore";
 
+const DEMO_SEED_PASSWORD = import.meta.env.VITE_DEMO_SEED_PASSWORD || "";
+
 const ADVOCATE = {
   email: "advocate.demo@nyayadheesh.com",
-  password: "Demo@1234",
+  password: DEMO_SEED_PASSWORD,
   name: "Rajesh Kumar Sharma",
   barId: "BAR/MH/2018/042",
   state: "Maharashtra",
@@ -24,14 +26,14 @@ const ADVOCATE = {
 const CLIENTS = [
   {
     email: "client1.demo@nyayadheesh.com",
-    password: "Demo@1234",
+    password: DEMO_SEED_PASSWORD,
     firstName: "Priya", lastName: "Mehta", name: "Priya Mehta",
     contact: "+91 91234 56789", govtId: "PAN-ABCPM1234D", city: "Mumbai",
     role: "client",
   },
   {
     email: "client2.demo@nyayadheesh.com",
-    password: "Demo@1234",
+    password: DEMO_SEED_PASSWORD,
     firstName: "Arjun", lastName: "Nair", name: "Arjun Nair",
     contact: "+91 87654 32109", govtId: "AADHAAR-9876-5432-1098", city: "Pune",
     role: "client",
@@ -66,6 +68,11 @@ function SeedDB() {
     setLog((p) => [...p, { msg, type, t: new Date().toLocaleTimeString() }]);
 
   const runSeed = async () => {
+    if (!DEMO_SEED_PASSWORD) {
+      alert("Set VITE_DEMO_SEED_PASSWORD in .env before seeding demo users.");
+      return;
+    }
+
     setRunning(true);
     setLog([]);
     L("🌱 Starting seed...", "info");
@@ -79,8 +86,9 @@ function SeedDB() {
       const advRef = userDocRef(db, "advocate", advUid);
       const advSnap = await getDoc(advRef);
       if (!advSnap.exists()) {
-        const { email, password, ...profile } = ADVOCATE;
-        await setDoc(advRef, { uid: advUid, email, ...profile, createdAt: new Date().toISOString() });
+        const profile = { ...ADVOCATE };
+        delete profile.password;
+        await setDoc(advRef, { uid: advUid, ...profile, createdAt: new Date().toISOString() });
         L(`✅ Advocate saved → advocates/${advUid}`, "success");
       } else {
         L(`⏭ Advocate already in DB`, "warn");
@@ -96,8 +104,9 @@ function SeedDB() {
         const ref = userDocRef(db, "client", uid);
         const snap = await getDoc(ref);
         if (!snap.exists()) {
-          const { email, password, ...profile } = client;
-          await setDoc(ref, { uid, email, ...profile, createdAt: new Date().toISOString() });
+          const profile = { ...client };
+          delete profile.password;
+          await setDoc(ref, { uid, ...profile, createdAt: new Date().toISOString() });
           L(`✅ Client saved → clients/${uid}`, "success");
         } else {
           L(`⏭ Client already in DB`, "warn");
@@ -228,7 +237,7 @@ function SeedDB() {
           <p className="text-white">📅 3 Hearings — success / postponed / upcoming</p>
           <p className="text-white">💬 5 Messages</p>
           <div className="mt-3 pt-3 border-t border-gray-800 font-mono text-xs space-y-1">
-            <p className="text-yellow-400 font-bold">Login credentials (all use password: Demo@1234)</p>
+            <p className="text-yellow-400 font-bold">Login credentials use your VITE_DEMO_SEED_PASSWORD value.</p>
             <p className="text-gray-300">Advocate: advocate.demo@nyayadheesh.com</p>
             <p className="text-gray-300">Client 1: client1.demo@nyayadheesh.com</p>
             <p className="text-gray-300">Client 2: client2.demo@nyayadheesh.com</p>

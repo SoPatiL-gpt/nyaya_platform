@@ -46,7 +46,6 @@ function Profile() {
   const uid = localStorage.getItem("mock_uid");
   const role = localStorage.getItem("mock_role");
   const isAdvocate = role === "advocate";
-  const themeColor = isAdvocate ? "neonPurple" : "neonBlue";
   const borderClass = isAdvocate ? "border-neonPurple" : "border-neonBlue";
   const textClass = isAdvocate ? "text-neonPurple" : "text-neonBlue";
   const btnClass = isAdvocate

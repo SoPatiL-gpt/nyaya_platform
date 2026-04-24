@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ClientLogin from "./pages/ClientLogin";
@@ -17,14 +18,38 @@ import Schedule from "./pages/Schedule";
 
 import Profile from "./pages/Profile";
 
-import MigrateDB from "./pages/MigrateDB";
-import SeedDB from "./pages/SeedDB";
+const maintenanceRoutesEnabled =
+  import.meta.env.DEV || import.meta.env.VITE_ENABLE_MAINTENANCE_ROUTES === "true";
+
+const MigrateDB = maintenanceRoutesEnabled ? lazy(() => import("./pages/MigrateDB")) : null;
+const SeedDB = maintenanceRoutesEnabled ? lazy(() => import("./pages/SeedDB")) : null;
+
+function MaintenanceRoute({ Component }) {
+  if (!maintenanceRoutesEnabled) {
+    return <Landing />;
+  }
+
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-darkBg text-white p-8">Loading...</div>}>
+      <Component />
+    </Suspense>
+  );
+}
 
 function App() {
   return (
     <Routes>
-      <Route path="/migrate" element={<MigrateDB />} />
-      <Route path="/seed" element={<SeedDB />} />
+      {maintenanceRoutesEnabled ? (
+        <>
+          <Route path="/migrate" element={<MaintenanceRoute Component={MigrateDB} />} />
+          <Route path="/seed" element={<MaintenanceRoute Component={SeedDB} />} />
+        </>
+      ) : (
+        <>
+          <Route path="/migrate" element={<Landing />} />
+          <Route path="/seed" element={<Landing />} />
+        </>
+      )}
       <Route path="/" element={<Landing />} />
       <Route path="/client-login" element={<ClientLogin />} />
       <Route path="/advocate-login" element={<AdvocateLogin />} />

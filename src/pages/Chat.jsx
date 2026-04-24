@@ -15,7 +15,6 @@ function Chat() {
 
   const currentUid = localStorage.getItem("mock_uid");
   const currentRole = localStorage.getItem("mock_role");
-  const currentEmail = localStorage.getItem("mock_email") || "";
   const themeColor = currentRole === "advocate" ? "neonPurple" : "neonBlue";
   const borderClass = currentRole === "advocate" ? "border-neonPurple" : "border-neonBlue";
   const textClass = currentRole === "advocate" ? "text-neonPurple" : "text-neonBlue";
