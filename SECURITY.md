@@ -15,3 +15,10 @@ Please report security issues privately to the repository owner instead of openi
 - Keep maintenance routes disabled unless actively running controlled setup work.
 - Use Firebase Auth, Firestore rules, and Storage rules to enforce role-based access.
 - Review seeded demo users before connecting the app to a production Firebase project.
+
+## CI/CD Hardening
+
+- GitHub Actions workflows use explicit least-privilege `GITHUB_TOKEN` permissions.
+- Third-party and GitHub-provided actions are pinned to commit SHAs.
+- CI runners use Harden Runner in audit mode for runtime visibility.
+- CodeQL and Dependabot are enabled through repository workflow/config files.

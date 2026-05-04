@@ -49,6 +49,8 @@ A React + Vite web app for client and advocate case workflows, including registr
 - Only enable `VITE_ENABLE_MAINTENANCE_ROUTES=true` or `VITE_RUN_STARTUP_MIGRATION=true` for controlled maintenance work.
 - Set `VITE_DEMO_SEED_PASSWORD` locally only when you intentionally seed demo users.
 - Protect Firestore and Storage with Firebase security rules before deploying publicly.
+- GitHub Actions are restricted to least-privilege permissions, pinned to action commit SHAs, monitored with Harden Runner, and scanned with CodeQL.
+- Dependabot is configured for npm and GitHub Actions updates.
 
 ## Project Structure
 
