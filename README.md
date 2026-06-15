@@ -1,72 +1,92 @@
-# Nyayadheesh Platform
+<div align="center">
+  <h1>Nyayadheesh Platform ⚖️</h1>
+  <p><i>A modern, comprehensive platform for bridging the gap between clients and advocates.</i></p>
 
-A React + Vite web app for client and advocate case workflows, including registration, dashboards, case creation, hearings, document uploads, chat, scheduling, and profile management.
+  [![CI](https://github.com/shubampatil002/nyayadheesh-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/shubampatil002/nyayadheesh-platform/actions/workflows/ci.yml)
+  [![CodeQL](https://github.com/shubampatil002/nyayadheesh-platform/actions/workflows/codeql.yml/badge.svg)](https://github.com/shubampatil002/nyayadheesh-platform/actions/workflows/codeql.yml)
+</div>
 
-## Tech Stack
+<hr />
 
-- React 19
-- Vite
-- Firebase Auth
-- Cloud Firestore
-- Firebase Storage
-- React Router
-- ESLint
+## 🌟 Overview
 
-## Setup
+The **Nyayadheesh Platform** is a powerful, React and Vite-based web application tailored for streamlining case workflows for clients and advocates. From seamless registration and dedicated dashboards to real-time chat and document management, the platform offers an intuitive, secure, and fully functional environment for legal case management.
 
-1. Install dependencies:
+## 🚀 Key Features
 
-   ```bash
-   npm ci
-   ```
+- **Role-Based Dashboards**: Tailored experiences for both Advocates and Clients.
+- **Case Management**: Effortlessly create, track, and manage legal cases and hearings.
+- **Document Vault**: Secure document uploads and storage powered by Firebase.
+- **Real-time Communication**: Integrated chat application for direct client-advocate communication.
+- **Smart Scheduling**: Manage appointments, hearings, and daily tasks efficiently.
+- **Profile Management**: Detailed profiles and verification for advocates.
 
-2. Copy the environment template:
+## 🛠️ Technology Stack
 
-   ```bash
-   cp .env.example .env
-   ```
+| Category         | Technology                                                                |
+| ---------------- | ------------------------------------------------------------------------- |
+| **Frontend**     | React 19, Vite, React Router DOM                                          |
+| **Backend/BaaS** | Firebase (Authentication, Cloud Firestore, Firebase Storage)              |
+| **Tooling**      | ESLint, Prettier                                                          |
+| **CI/CD**        | GitHub Actions (Security scanning, Node CI, CodeQL analysis, Dependabot) |
 
-3. Fill `.env` with your Firebase web app configuration.
+## ⚙️ Local Development Setup
 
-4. Start development:
+To run this project locally, follow these steps:
 
-   ```bash
-   npm run dev
-   ```
+### 1. Install Dependencies
+```bash
+npm ci
+```
 
-## Scripts
+### 2. Environment Variables
+Copy the provided environment template to your local `.env` file:
+```bash
+cp .env.example .env
+```
+Open `.env` and fill in your Firebase Web App configuration values. 
 
-- `npm run dev` starts the local Vite server.
-- `npm run build` creates a production build in `dist`.
-- `npm run lint` runs ESLint.
-- `npm run preview` previews the production build locally.
+> **Warning**
+> Never commit your `.env` file to version control. The `.gitignore` file is configured to ignore it by default.
 
-## Security Notes
+### 3. Start Development Server
+```bash
+npm run dev
+```
 
-- `.env` and `.env.*` are ignored by git. Do not commit Firebase values, service-account files, private keys, tokens, or production credentials.
-- Firebase web config values are read from `VITE_FIREBASE_*` environment variables.
-- Database seed and migration pages are disabled in production by default.
-- Only enable `VITE_ENABLE_MAINTENANCE_ROUTES=true` or `VITE_RUN_STARTUP_MIGRATION=true` for controlled maintenance work.
-- Set `VITE_DEMO_SEED_PASSWORD` locally only when you intentionally seed demo users.
-- Protect Firestore and Storage with Firebase security rules before deploying publicly.
-- GitHub Actions are restricted to least-privilege permissions, pinned to action commit SHAs, monitored with Harden Runner, and scanned with CodeQL.
-- Dependabot is configured for npm and GitHub Actions updates.
+## 📜 Available Scripts
 
-## Project Structure
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Starts the Vite development server. |
+| `npm run build` | Bundles the app for production into the `dist` directory. |
+| `npm run lint` | Runs ESLint to catch and fix code quality issues. |
+| `npm run preview` | Previews the production build locally. |
+
+## 📁 Project Structure
 
 ```text
 src/
-  components/        Shared route and UI components
-  lib/               Firebase collection helpers
-  pages/             Application screens
-  firebase.js        Firebase client initialization
-  main.jsx           App bootstrap
-public/              Static assets
+├── components/        # Reusable UI components and route guards
+├── lib/               # Firebase collection helpers and core logic
+├── pages/             # Application views and screens
+├── firebase.js        # Firebase initialization and exports
+└── main.jsx           # Application entry point
 ```
 
-## Deployment Checklist
+## 🔒 Security Best Practices
 
-- Run `npm run lint`.
-- Run `npm run build`.
-- Confirm `.env` is not staged with `git status --ignored --short`.
-- Confirm Firebase security rules are configured for real user access.
+We prioritize security across the entire stack:
+- **Environment Variables**: Firebase configs and secrets are handled via `VITE_FIREBASE_*`.
+- **Production Safety**: Database seed and migration scripts are **disabled** by default in production. Enable them only for controlled maintenance (`VITE_ENABLE_MAINTENANCE_ROUTES=true`).
+- **Database Rules**: Ensure Firestore and Firebase Storage are protected by robust security rules before taking the app live.
+- **CI/CD Hardening**: GitHub Actions use pinned commits, step-security harden-runner, CodeQL scanning, and strict Dependabot auditing.
+
+## 🚢 Deployment Checklist
+
+Before pushing to production, verify the following:
+- [x] Run `npm run lint` to ensure code quality.
+- [x] Run `npm run build` and ensure there are no build errors.
+- [x] Verify `.env` is **not** staged (`git status --ignored --short`).
+- [x] Ensure Firebase security rules are correctly configured for authenticated users only.
+- [x] Check GitHub Actions CI workflows pass successfully.
